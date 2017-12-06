@@ -1,0 +1,27 @@
+
+
+.home h3{
+    text-align: center;
+    margin: 50px;
+    padding: 10px;
+}
+
+.home .selectnumbercell{
+    display: inline;  
+    text-align: center;
+}
+.home .selectnumbercell span{
+    font-size: 150%;
+}
+
+.Aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Aligner span{
+    font-size:  150%;
+}
+
+  
