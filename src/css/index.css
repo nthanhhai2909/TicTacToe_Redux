@@ -24,4 +24,25 @@
     font-size:  150%;
 }
 
+.my-btn-x{
+    width: 40px;
+    height: 40px;
+    font-family: 'Franklin Gothic Medium';
+    background-color: green;
+    font-size: 140%;
+    color: #1A237E;
+    outline: none;
+}
+
+.my-btn-o{
+    width: 40px;
+    height: 40px;
+    background-color: green;
+    font-size: 140%;
+    color: #E65100;
+    outline: none;
+}
+
+
+
   
