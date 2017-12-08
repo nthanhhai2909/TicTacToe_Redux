@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import PlayGame from '../components/PlayGame'
-import {setBoard, changeBoard} from '../actions/playgame'
+import {setBoard, changeBoard, setWinGame} from '../actions/playgame'
 
 class PlayGameContainer extends React.Component {
     constructor(props){
@@ -14,24 +14,21 @@ class PlayGameContainer extends React.Component {
         this.props.setBoard(parseInt(this.props.numberCell));
     }
     handleClick(row, col){
-        if(this.props.board[row][col] !== null){
+        if(this.props.isWin){
             return;
         }
 
+        if(this.props.board[row][col] !== null){
+            return;
+        }
+        // check win
+        if(this.isWin(this.props.board, row, col, this.props.turn) !== null){
+            this.props.setWinGame();
+        }
         this.props.changeBoard(row, col);
+        
     }
-    isWin(board, rowCheck, colCheck){
-        if(board === null){
-            return null;
-        }
-        if(rowCheck === null || colCheck === null){
-            return null;
-        }
-
-        if(rowCheck > board.length || colCheck > board.length || rowCheck < 0 || colCheck < 0){
-            return null;
-        }
-        var turn = board[rowCheck][colCheck];
+    isWin(board, rowCheck, colCheck, turn){
 
         let index = colCheck;
         let arrBoxWin = [];
@@ -134,6 +131,46 @@ class PlayGameContainer extends React.Component {
             arrBoxWin = [];
             arrBoxWin.push([rowCheck, colCheck]);
         }
+
+        //--------------------------------------------------------------
+
+        while(rowIndex > 0 && colCheck < board.length - 1){
+            rowIndex--;
+            colIndex++;
+            if(board[rowIndex][colIndex] === turn){
+                arrBoxWin.push([rowIndex, colIndex]);
+            }
+            else{
+                
+                break;
+            }
+        }
+        rowIndex = rowCheck;
+        colIndex = colCheck;
+        while(rowIndex < board.length - 1 && colIndex > 0){
+            rowIndex++;
+            colIndex--;
+            if(rowIndex === board.length){
+                return null;
+            }
+            if(board[rowIndex][colIndex] === turn){
+                arrBoxWin.push([rowIndex, colIndex]);
+            }
+            else{
+                break;
+            }
+        }
+        
+        if(arrBoxWin.length >= 5){
+            return arrBoxWin;
+        }
+        else{
+            rowIndex = rowCheck;
+            colIndex = colCheck;
+            arrBoxWin = [];
+        }
+
+        return null;
     }
     render(){
         return(
@@ -149,21 +186,24 @@ class PlayGameContainer extends React.Component {
 }
 
 const mapStateToProps = state =>({
+    isWin: state.playgameReducer.playGame.isWin,
     turn: state.playgameReducer.playGame.turn,
     numberCell: state.homeReducer.numberCell,
-    board: state.playgameReducer.playGame.board
+    board: state.playgameReducer.playGame.board,
 })
     
 
 
 PlayGameContainer.propTypes = {
+    isWin: PropTypes.bool.isRequired,
     turn: PropTypes.string.isRequired,
     numberCell: PropTypes.string.isRequired,
     board: PropTypes.array,
     setBoard: PropTypes.func,
-    changeBoard: PropTypes.func
+    changeBoard: PropTypes.func,
+    setWinGame:PropTypes.func,
 }
 export default connect(
     mapStateToProps,
-    { setBoard, changeBoard }
+    { setBoard, changeBoard, setWinGame }
 ) (PlayGameContainer)

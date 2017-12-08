@@ -17,6 +17,12 @@ export const setValueBoard = (row, col) => ({
 export const changeTurn = () => ({
     type:types.CHANGE_TURN
 })
+export const playerWin = () =>({
+    type:types.PLAYER_WIN
+})
+
+export const setWinGame = () => (dispatch) => 
+    dispatch(playerWin());
 
 export const changeBoard = (row, col) => (dispatch) =>{
     dispatch(setValueBoard(row, col));

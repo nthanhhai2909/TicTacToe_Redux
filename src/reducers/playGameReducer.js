@@ -1,10 +1,12 @@
 import {INIT_BOARD,
      SET_VALUE_BOARD,
-     CHANGE_TURN
+     CHANGE_TURN,
+     PLAYER_WIN
     } from '../constants/actionTypes'
 import { combineReducers } from 'redux'
 
 const initialState = {
+    isWin: false,
     turn: 'x',
     board: new Array(0),
 }
@@ -28,7 +30,9 @@ const playGame = (state = initialState, action) => {
             if(state.turn === 'o'){
                 mTurn='x';
             }
-            return Object.assign({}, state, {turn: mTurn})
+            return Object.assign({}, state, {turn: mTurn});
+        case PLAYER_WIN:
+            return Object.assign({}, state, {isWin:true})
         default: 
             return state;
     }
