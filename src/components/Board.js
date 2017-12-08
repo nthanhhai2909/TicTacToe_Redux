@@ -4,12 +4,12 @@ import Cell from './Cell'
 import '../css/index.css'
 
 
-const Board = ({board, clickBox}) => (
+const Board = ({board, clickBox, listChessOfWin}) => (
     board.map((element, index) =>
         <Cell cell={element}
             rowIndex={index}
             clickBox={(row, col) => clickBox(row, col)}
-            
+            listChessOfWin={listChessOfWin}
         />
         )
 )

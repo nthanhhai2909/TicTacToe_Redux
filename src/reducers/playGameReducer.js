@@ -1,11 +1,18 @@
 import {INIT_BOARD,
      SET_VALUE_BOARD,
      CHANGE_TURN,
-     PLAYER_WIN
+     PLAYER_WIN, 
+     OPEN_DIALOG, 
+     CLOSE_DIALOG,
+     SET_PLAYER_WIN,
+     SET_LIST_CHESS_OF_WIN,
     } from '../constants/actionTypes'
 import { combineReducers } from 'redux'
 
 const initialState = {
+    listChessOfWin: null,
+    playerWin: null,
+    showDialog: false,
     isWin: false,
     turn: 'x',
     board: new Array(0),
@@ -33,6 +40,16 @@ const playGame = (state = initialState, action) => {
             return Object.assign({}, state, {turn: mTurn});
         case PLAYER_WIN:
             return Object.assign({}, state, {isWin:true})
+        case OPEN_DIALOG:
+            return Object.assign({}, state, {showDialog: true});
+        case CLOSE_DIALOG:
+            return Object.assign({}, state, {showDialog: false});
+        case SET_PLAYER_WIN:
+            return Object.assign({}, state, {playerWin: action.player})
+        case SET_LIST_CHESS_OF_WIN:
+            let listChess = JSON.parse(JSON.stringify(state.listChessOfWin));
+            
+            return Object.assign({}, state, {listChessOfWin: action.arrayList})
         default: 
             return state;
     }

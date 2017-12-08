@@ -3,20 +3,29 @@ import PropTypes from 'prop-types';
 import Square from './Square'
 import '../css/index.css'
 
-const Cell = ({cell, rowIndex, clickBox}) =>(
-    <div>
-        {
-            cell.map((element, index) => 
-            <Square
-                clickBox={() => clickBox(rowIndex, index)}
-                value={element}
-            />
-            )
-        }
-        <br/>
-    </div>
+const Cell = ({cell, rowIndex, clickBox, listChessOfWin}) =>{
+        return(
+            <div>
+                {
+                    cell.map((element, index) =>             
+                                <Square
+                                    clickBox={() => clickBox(rowIndex, index)}
+                                    value={element}
+                                    listChessOfWin={listChessOfWin}
+                                    row={rowIndex}
+                                    col={index}
+                                />
+                            )
+                }
+ 
+                        
+            </div>
+        )
+    }
+
     
-)
+    
+
       
 
 Cell.propTypes = {
