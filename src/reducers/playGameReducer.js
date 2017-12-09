@@ -10,6 +10,8 @@ import {INIT_BOARD,
      ADD_NUMBER_MOVE,
      OPEN_DIALOG_EQUAL,
      CLOSE_DIALOG_EQUAL,
+     OPEN_SORT_ACSCEDING, 
+     CLOSE_SORT_ACSCEDING
     } from '../constants/actionTypes'
 import { combineReducers } from 'redux'
 
@@ -26,7 +28,7 @@ const initialStatePlayGame = {
 }
 const initialStateHistory = {
     historys: [{row: -1, col: -1, turn: 'none'}],
-    sortByAscending: true,
+    sortByAscending: false,
     numberMove: 0,
 }
 
@@ -83,11 +85,16 @@ const historys = (state = initialStateHistory, action) => {
                     ]
                 })
         case ADD_NUMBER_MOVE:
-            return Object.assign({}, state, {numberMove: state.numberMove + 1})
+            return Object.assign({}, state, {numberMove: state.numberMove + 1});
+        case OPEN_SORT_ACSCEDING:
+            return Object.assign({}, state, {sortByAscending: true});
+        case CLOSE_SORT_ACSCEDING:
+            return Object.assign({}, state, {sortByAscending: false});
         default: 
             return state;
     }
 }
+
 export default combineReducers({
     playGame,
     historys

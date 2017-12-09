@@ -83,6 +83,23 @@ export const changeHistory =  (row, col, turn) => (dispatch) =>{
 }
 
 
+export const openSortAscending = () =>({
+    type: types.OPEN_SORT_ACSCEDING
+})
+
+export const closeSortAscending = () => ({
+    type: types.CLOSE_SORT_ACSCEDING
+})
+
+export const toogleSortAscending = () => (dispatch, getState) => {
+    if(getState().playgameReducer.historys.sortByAscending === false){
+        dispatch(openSortAscending());
+    }
+    else{
+        dispatch(closeSortAscending());
+    }
+    
+}
 
 
 

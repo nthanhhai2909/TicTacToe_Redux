@@ -8,13 +8,15 @@ import {Grid, Row, Col} from 'react-bootstrap'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import { toogleDialog } from '../actions/playgame';
 
 
 const PlayGame = ({board, clickBox, turn,
      showDialog, submitWin, playerWin,
       listChessOfWin, historys,
-      submitEqual, showDialogEqual }) => {
-
+      submitEqual, showDialogEqual,
+      toogleSortClick, sortByAscending }) => {
+        
     const actions = [
         <FlatButton
           label="OK"
@@ -58,6 +60,8 @@ const PlayGame = ({board, clickBox, turn,
                     <Parameter 
                         turn={turn}
                         historys={historys}
+                        toogleSortClick={(value) => toogleSortClick(value)}
+                        sortByAscending={sortByAscending}
                     />
                 </Col>
                 <Col md={9} >
@@ -88,6 +92,7 @@ PlayGame.propTypes = {
     historys: PropTypes.array,
     showDialogEqual: PropTypes.bool,
     submitEqual: PropTypes.func,
+    sortByAscending: PropTypes.bool
 }
 
 export default PlayGame

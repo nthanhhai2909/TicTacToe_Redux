@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import PlayGame from '../components/PlayGame'
 import {setBoard, changeBoard, setWinGame,
-     toogleDialog,toogleDialogEqual, setPlayerWin, changeHistory} from '../actions/playgame'
+     toogleDialog,toogleDialogEqual, setPlayerWin,
+      changeHistory, toogleSortAscending} from '../actions/playgame'
 
 
 class PlayGameContainer extends React.Component {
@@ -191,6 +192,7 @@ class PlayGameContainer extends React.Component {
 
         return null;
     }
+
     render(){
         return(
             <PlayGame
@@ -205,6 +207,8 @@ class PlayGameContainer extends React.Component {
                 clickBox={(row, col) => this.handleClick(row, col)}
                 historys={this.props.historys}
                 submitEqual={() => this.props.toogleDialogEqual(false)}
+                toogleSortClick={() => this.props.toogleSortAscending()}
+                sortByAscending={this.props.sortByAscending}
              />
             
         )
@@ -223,8 +227,8 @@ const mapStateToProps = state =>({
     historys: state.playgameReducer.historys.historys,
     numberMove: state.playgameReducer.historys.numberMove,
     isEqual: state.playgameReducer.playGame.isEqual,
-    showDialogEqual: state.playgameReducer.playGame.showDialogEqual
-
+    showDialogEqual: state.playgameReducer.playGame.showDialogEqual,
+    sortByAscending: state.playgameReducer.historys.sortByAscending
 })
     
 
@@ -244,7 +248,9 @@ PlayGameContainer.propTypes = {
     numberMove: PropTypes.number,
     isEqual: PropTypes.bool,
     showDialogEqual: PropTypes.bool,
-    toogleDialogEqual: PropTypes.func
+    toogleDialogEqual: PropTypes.func, 
+    sortByAscending: PropTypes.bool,
+    toogleSortAscending: PropTypes.func,
     
 }
 export default connect(
@@ -252,5 +258,6 @@ export default connect(
     { setBoard, changeBoard, setWinGame, 
         toogleDialog, setPlayerWin, 
         changeHistory,
-        toogleDialogEqual}
+        toogleDialogEqual,
+    toogleSortAscending}
 ) (PlayGameContainer)
