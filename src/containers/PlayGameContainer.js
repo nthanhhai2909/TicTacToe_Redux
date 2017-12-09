@@ -2,7 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import PlayGame from '../components/PlayGame'
-import {setBoard, changeBoard, setWinGame, toogleDialog, setPlayerWin,} from '../actions/playgame'
+import {setBoard, changeBoard, setWinGame,
+     toogleDialog, setPlayerWin, addMoveHistory} from '../actions/playgame'
 
 
 class PlayGameContainer extends React.Component {
@@ -30,7 +31,10 @@ class PlayGameContainer extends React.Component {
             this.props.toogleDialog(true); 
             this.props.setPlayerWin(this.props.turn, arrWin);
         }
+
         this.props.changeBoard(row, col);
+        //add move in history
+        this.props.addMoveHistory(row, col, this.props.turn);
         
     }
     isWin(board, rowCheck, colCheck, turn){
@@ -188,6 +192,7 @@ class PlayGameContainer extends React.Component {
                 turn={this.props.turn}
                 board={this.props.board}
                 clickBox={(row, col) => this.handleClick(row, col)}
+                historys={this.props.historys}
              />
             
         )
@@ -202,7 +207,9 @@ const mapStateToProps = state =>({
     numberCell: state.homeReducer.numberCell,
     board: state.playgameReducer.playGame.board,
     playerWin: state.playgameReducer.playGame.playerWin,
-    listChessOfWin: state.playgameReducer.playGame.listChessOfWin
+    listChessOfWin: state.playgameReducer.playGame.listChessOfWin,
+    historys: state.playgameReducer.historys.historys,
+
 })
     
 
@@ -217,9 +224,12 @@ PlayGameContainer.propTypes = {
     setWinGame:PropTypes.func,
     toogleDialog: PropTypes.func,
     setPlayerWin: PropTypes.func, 
+    addMoveHistory: PropTypes.func,
+    history: PropTypes.array,
     
 }
 export default connect(
     mapStateToProps,
-    { setBoard, changeBoard, setWinGame, toogleDialog, setPlayerWin }
+    { setBoard, changeBoard, setWinGame, 
+        toogleDialog, setPlayerWin, addMoveHistory}
 ) (PlayGameContainer)

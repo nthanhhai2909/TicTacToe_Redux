@@ -6,10 +6,11 @@ import {INIT_BOARD,
      CLOSE_DIALOG,
      SET_PLAYER_WIN,
      SET_LIST_CHESS_OF_WIN,
+     ADD_MOVE_HISTORY,
     } from '../constants/actionTypes'
 import { combineReducers } from 'redux'
 
-const initialState = {
+const initialStatePlayGame = {
     listChessOfWin: null,
     playerWin: null,
     showDialog: false,
@@ -17,10 +18,14 @@ const initialState = {
     turn: 'x',
     board: new Array(0),
 }
+const initialStateHistory = {
+    historys: [{row: -1, col: -1, turn: 'none'}],
+    sortByAscending: true,
+}
 
 const newBoard = numberCell => Array.apply(null, Array(numberCell)).map(() => new Array(numberCell).fill(null))
 
-const playGame = (state = initialState, action) => {
+const playGame = (state = initialStatePlayGame, action) => {
     switch(action.type){
         case INIT_BOARD:
             return Object.assign({}, state,
@@ -54,17 +59,25 @@ const playGame = (state = initialState, action) => {
             return state;
     }
 }
-const history = (state = {}, action) => {
+const historys = (state = initialStateHistory, action) => {
     switch(action.type){
-        case 'hihi':
-            return state;
+        case ADD_MOVE_HISTORY:
+            return Object.assign({}, state,
+                 {historys: [...state.historys,
+                        {
+                            row: action.row,
+                            col: action.col,
+                            turn: action.turn,
+                        }
+                    ]
+                })
         default: 
             return state;
     }
 }
 export default combineReducers({
     playGame,
-    history
+    historys
   })
 
 

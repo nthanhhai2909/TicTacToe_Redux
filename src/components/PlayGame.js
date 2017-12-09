@@ -10,7 +10,10 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 
 
-const PlayGame = ({board, clickBox, turn, showDialog, submitWin, playerWin, listChessOfWin }) => {
+const PlayGame = ({board, clickBox, turn,
+     showDialog, submitWin, playerWin,
+      listChessOfWin, historys }) => {
+
     const actions = [
         <FlatButton
           label="OK"
@@ -36,6 +39,7 @@ const PlayGame = ({board, clickBox, turn, showDialog, submitWin, playerWin, list
                 <Col md={3}>
                     <Parameter 
                         turn={turn}
+                        historys={historys}
                     />
                 </Col>
                 <Col md={9} >
@@ -62,7 +66,8 @@ PlayGame.propTypes = {
     isWin: PropTypes.bool,
     turn:PropTypes.string,
     board: PropTypes.array,
-    clickBox: PropTypes.func
+    clickBox: PropTypes.func, 
+    historys: PropTypes.array,
 }
 
 export default PlayGame

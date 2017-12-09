@@ -1,7 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types'
 import '../css/index.css'
 import Toggle from 'material-ui/Toggle'
+import HistoryList from './HistoryList'
 const ParameterGame = ({turn, historys}) => (
     <div>
         <h3>Parameter</h3>
@@ -17,6 +18,11 @@ const ParameterGame = ({turn, historys}) => (
         </div>
         <hr/>
         <h4>Steps</h4>
+        <div className='list-steps' >
+            <HistoryList
+                historys={historys}
+            />
+        </div>
     </div>
 )
 

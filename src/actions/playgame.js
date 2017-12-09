@@ -54,7 +54,18 @@ export const setPlayerWin = (player, arrayList) => (dispatch) => {
     dispatch(PlayerWin(player));
     dispatch(setListChessOfWin(arrayList));
 }
+
+export const move = (row, col, turn) =>({
+    type: types.ADD_MOVE_HISTORY,
+    row,
+    col,
+    turn
+})
     
+
+export const addMoveHistory =  (row, col, turn) => (dispatch) =>{
+    dispatch(move(row, col, turn));
+}
 
 
 
