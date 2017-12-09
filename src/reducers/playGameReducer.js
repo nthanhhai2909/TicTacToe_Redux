@@ -7,20 +7,27 @@ import {INIT_BOARD,
      SET_PLAYER_WIN,
      SET_LIST_CHESS_OF_WIN,
      ADD_MOVE_HISTORY,
+     ADD_NUMBER_MOVE,
+     OPEN_DIALOG_EQUAL,
+     CLOSE_DIALOG_EQUAL,
     } from '../constants/actionTypes'
 import { combineReducers } from 'redux'
 
 const initialStatePlayGame = {
     listChessOfWin: null,
     playerWin: null,
-    showDialog: false,
+    showDialogWin: false,
     isWin: false,
+    isEqual: false,
+    showDialogEqual: false,
     turn: 'x',
     board: new Array(0),
+    
 }
 const initialStateHistory = {
     historys: [{row: -1, col: -1, turn: 'none'}],
     sortByAscending: true,
+    numberMove: 0,
 }
 
 const newBoard = numberCell => Array.apply(null, Array(numberCell)).map(() => new Array(numberCell).fill(null))
@@ -49,12 +56,16 @@ const playGame = (state = initialStatePlayGame, action) => {
             return Object.assign({}, state, {showDialog: true});
         case CLOSE_DIALOG:
             return Object.assign({}, state, {showDialog: false});
+        case OPEN_DIALOG_EQUAL:
+            return Object.assign({}, state, {showDialogEqual: true});
+        case CLOSE_DIALOG_EQUAL:
+            return Object.assign({}, state, {showDialogEqual: false});
         case SET_PLAYER_WIN:
             return Object.assign({}, state, {playerWin: action.player})
         case SET_LIST_CHESS_OF_WIN:
             let listChess = JSON.parse(JSON.stringify(state.listChessOfWin));
-            
             return Object.assign({}, state, {listChessOfWin: action.arrayList})
+        
         default: 
             return state;
     }
@@ -71,6 +82,8 @@ const historys = (state = initialStateHistory, action) => {
                         }
                     ]
                 })
+        case ADD_NUMBER_MOVE:
+            return Object.assign({}, state, {numberMove: state.numberMove + 1})
         default: 
             return state;
     }

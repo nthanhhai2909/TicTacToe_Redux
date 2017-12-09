@@ -37,6 +37,17 @@ export const closeDialog = () => ({
     type: types.CLOSE_DIALOG
 })
 
+export const openDialogEqual = () =>({
+    type:types.OPEN_DIALOG_EQUAL
+})
+export const closeDialogEqual = () =>({
+    type:types.CLOSE_DIALOG_EQUAL
+})
+
+export const toogleDialogEqual = (status) => (dispatch) => {
+    status ? dispatch(openDialogEqual()): dispatch(closeDialogEqual());
+}
+
 export const toogleDialog = (status) => (dispatch) => {
     status ? dispatch(openDialog()): dispatch(closeDialog());
 }
@@ -55,17 +66,23 @@ export const setPlayerWin = (player, arrayList) => (dispatch) => {
     dispatch(setListChessOfWin(arrayList));
 }
 
-export const move = (row, col, turn) =>({
+export const addMoveHistory = (row, col, turn) =>({
     type: types.ADD_MOVE_HISTORY,
     row,
     col,
     turn
 })
+export const addNumberMove = () =>({
+    type: types.ADD_NUMBER_MOVE
+})
     
 
-export const addMoveHistory =  (row, col, turn) => (dispatch) =>{
-    dispatch(move(row, col, turn));
+export const changeHistory =  (row, col, turn) => (dispatch) =>{
+    dispatch(addMoveHistory(row, col, turn));
+    dispatch(addNumberMove());
 }
+
+
 
 
 

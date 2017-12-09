@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import PlayGame from '../components/PlayGame'
 import {setBoard, changeBoard, setWinGame,
-     toogleDialog, setPlayerWin, addMoveHistory} from '../actions/playgame'
+     toogleDialog,toogleDialogEqual, setPlayerWin, changeHistory} from '../actions/playgame'
 
 
 class PlayGameContainer extends React.Component {
@@ -24,6 +24,10 @@ class PlayGameContainer extends React.Component {
             return;
         }
 
+        if(this.isEqual(parseInt(this.props.numberCell), this.props.numberMove)){
+            this.props.toogleDialogEqual(true)
+            this.props.setWinGame();
+        }
         let arrWin = this.isWin(this.props.board, row, col, this.props.turn);
         // check win
         if(arrWin !== null){
@@ -34,8 +38,14 @@ class PlayGameContainer extends React.Component {
 
         this.props.changeBoard(row, col);
         //add move in history
-        this.props.addMoveHistory(row, col, this.props.turn);
+        this.props.changeHistory(row, col, this.props.turn);
         
+    }
+    isEqual(numberCell, numberMove){
+        if(numberMove === (numberCell * numberCell - 1 )){
+            return true
+        }
+        return false;
     }
     isWin(board, rowCheck, colCheck, turn){
 
@@ -187,12 +197,14 @@ class PlayGameContainer extends React.Component {
                 listChessOfWin={this.props.listChessOfWin}
                 playerWin={this.props.playerWin}
                 submitWin={() => this.props.toogleDialog(false)}
-                showDialog={this.props.showDialog}
+                showDialog={this.props.showDialogWin}
+                showDialogEqual={this.props.showDialogEqual}
                 isWin={this.props.isWin}
                 turn={this.props.turn}
                 board={this.props.board}
                 clickBox={(row, col) => this.handleClick(row, col)}
                 historys={this.props.historys}
+                submitEqual={() => this.props.toogleDialogEqual(false)}
              />
             
         )
@@ -201,7 +213,7 @@ class PlayGameContainer extends React.Component {
 }
 
 const mapStateToProps = state =>({
-    showDialog: state.playgameReducer.playGame.showDialog,
+    showDialogWin: state.playgameReducer.playGame.showDialog,
     isWin: state.playgameReducer.playGame.isWin,
     turn: state.playgameReducer.playGame.turn,
     numberCell: state.homeReducer.numberCell,
@@ -209,6 +221,9 @@ const mapStateToProps = state =>({
     playerWin: state.playgameReducer.playGame.playerWin,
     listChessOfWin: state.playgameReducer.playGame.listChessOfWin,
     historys: state.playgameReducer.historys.historys,
+    numberMove: state.playgameReducer.historys.numberMove,
+    isEqual: state.playgameReducer.playGame.isEqual,
+    showDialogEqual: state.playgameReducer.playGame.showDialogEqual
 
 })
     
@@ -224,12 +239,18 @@ PlayGameContainer.propTypes = {
     setWinGame:PropTypes.func,
     toogleDialog: PropTypes.func,
     setPlayerWin: PropTypes.func, 
-    addMoveHistory: PropTypes.func,
+    changeHistory: PropTypes.func,
     history: PropTypes.array,
+    numberMove: PropTypes.number,
+    isEqual: PropTypes.bool,
+    showDialogEqual: PropTypes.bool,
+    toogleDialogEqual: PropTypes.func
     
 }
 export default connect(
     mapStateToProps,
     { setBoard, changeBoard, setWinGame, 
-        toogleDialog, setPlayerWin, addMoveHistory}
+        toogleDialog, setPlayerWin, 
+        changeHistory,
+        toogleDialogEqual}
 ) (PlayGameContainer)

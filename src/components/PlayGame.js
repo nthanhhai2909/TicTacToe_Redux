@@ -12,7 +12,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 const PlayGame = ({board, clickBox, turn,
      showDialog, submitWin, playerWin,
-      listChessOfWin, historys }) => {
+      listChessOfWin, historys,
+      submitEqual, showDialogEqual }) => {
 
     const actions = [
         <FlatButton
@@ -20,6 +21,14 @@ const PlayGame = ({board, clickBox, turn,
           primary={true}
           keyboardFocused={true}
           onClick={() => submitWin()}
+        />,
+      ];
+      const actionsEqual = [
+        <FlatButton
+          label="OK"
+          primary={true}
+          keyboardFocused={true}
+          onClick={() => submitEqual()}
         />,
       ];
     return(
@@ -33,6 +42,15 @@ const PlayGame = ({board, clickBox, turn,
             onRequestClose={() => submitWin()}
         >
             {playerWin} win 
+        </Dialog>
+        <Dialog
+            title="Match result"
+            actions={actionsEqual}
+            modal={false}
+            open={showDialogEqual}
+            onRequestClose={() => submitEqual()}
+        >
+            EQUAL
         </Dialog>
         <Grid bsClass='container' style={{backgroundColor:'#004D40', color:"#E0F2F1"}}>
             <Row className="show-grid">
@@ -68,6 +86,8 @@ PlayGame.propTypes = {
     board: PropTypes.array,
     clickBox: PropTypes.func, 
     historys: PropTypes.array,
+    showDialogEqual: PropTypes.bool,
+    submitEqual: PropTypes.func,
 }
 
 export default PlayGame

@@ -8,7 +8,6 @@ const HistoryItem = ({isSelect, row, col}) => {
     }
     else{
         move = row + ' - ' + col;
-        console.log('move', move)
     }
 
     return( 
