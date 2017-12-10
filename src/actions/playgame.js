@@ -139,6 +139,9 @@ export const setTurn = (turn) => ({
 })
 
 export const getHistoryandSetBoard = (row, col) => (dispatch, getState) => {
+    if(getState().playgameReducer.playGame.isWin){
+        return;
+    }
     let index = -1;
 
     for(let i = 0; i < getState().playgameReducer.historys.listChess.length; i++){
