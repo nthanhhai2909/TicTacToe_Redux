@@ -16,7 +16,8 @@ const PlayGame = ({board, clickBox, turn,
       listChessOfWin, historys,
       submitEqual, showDialogEqual,
       toogleSortClick, sortByAscending,
-      clickItemHistory, listChess }) => {
+      clickItemHistory, listChess, resetGame
+     }) => {
         
     const actions = [
         <FlatButton
@@ -55,7 +56,7 @@ const PlayGame = ({board, clickBox, turn,
         >
             EQUAL
         </Dialog>
-        <Grid bsClass='container' style={{backgroundColor:'#004D40', color:"#E0F2F1", height: 800}}>
+        <Grid bsClass='container' style={{backgroundColor:'#004D40', color:"#E0F2F1", height: 600}}>
             <Row className="show-grid">
                 <Col md={3}>
                     <Parameter 
@@ -65,6 +66,7 @@ const PlayGame = ({board, clickBox, turn,
                         sortByAscending={sortByAscending}
                         clickItemHistory={(row, col) => clickItemHistory(row, col)}
                         listChess={listChess}
+                        resetGame={()=> resetGame()}
                     />
                 </Col>
                 <Col md={9} >
@@ -72,10 +74,13 @@ const PlayGame = ({board, clickBox, turn,
                         board={board}
                         listChessOfWin={listChessOfWin}
                         clickBox={(row, col) => clickBox(row, col)}
+                        
                     />
+                    
                 </Col>
             </Row>
         </Grid>
+        
         
     </div>
     )

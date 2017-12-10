@@ -3,11 +3,18 @@ import PropTypes from 'prop-types'
 import '../css/index.css'
 import Toggle from 'material-ui/Toggle'
 import HistoryList from './HistoryList'
+import RaisedButton from 'material-ui/RaisedButton'
 const ParameterGame = ({turn, historys, toogleSortClick,
-     sortByAscending, clickItemHistory,listChess  }) => (
+     sortByAscending, clickItemHistory,listChess, resetGame  }) => (
     <div>
         <h3>Parameter</h3>
         <hr />
+        <RaisedButton
+                    style={{marginBottom:20, width:250}}
+                    label="NEW GAME"
+                    primary={true} 
+                    onClick={() => resetGame()}
+                />
         <h4>Turn: {turn}</h4>
         <div className="Aligner">
             <span style={{marginRight:50, width:'80%'}}>Ascending</span>

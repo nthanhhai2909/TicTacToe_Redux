@@ -222,6 +222,7 @@ class PlayGameContainer extends React.Component {
                 sortByAscending={this.props.sortByAscending}
                 listChess={this.props.listChess}
                 clickItemHistory={(row, col) => this.props.getHistoryandSetBoard(row, col)}
+                resetGame={() =>  this.props.history.push('/')}
              />
             
         )

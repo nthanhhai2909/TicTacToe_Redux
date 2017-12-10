@@ -2,12 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import Cell from './Cell'
 import '../css/index.css'
+import RaisedButton from 'material-ui/RaisedButton'
 
-
-const Board = ({board, clickBox, listChessOfWin}) => (
+const Board = ({board, clickBox, listChessOfWin, resetGame}) => (
     <div>
-        <h3>Board</h3>
-        <hr />
+        <div className='Aligner'>
+            <h3>Board</h3>
+            
+            <hr />
+        </div>
+        
         {
             board.map((element, index) =>
             <Cell cell={element}
