@@ -5,9 +5,22 @@ export const initBoard = numberCell => ({
     numberCell
 })
 
+export const newGame = () => ({
+    type: types.NEW_GAME,
+})
+
+export const newHistory = () => ({
+    type: types.NEW_HISTORY
+})
+
+export const newGameClick = () => (dispatch) => {
+    dispatch(newHistory());
+    dispatch(newGame());
+}
 export const setBoard = numberCell => (dispatch) => {
     dispatch(initBoard(numberCell));
 }
+
 
 export const setValueBoard = (row, col) => ({
     type: types.SET_VALUE_BOARD,
@@ -40,7 +53,6 @@ export const changeBoard = (row, col) => (dispatch, getState) =>{
             mListChess = mListChess.slice(0, getState().playgameReducer.playGame.indexHistory + 1);
             dispatch(backHistory(mHistorys, mListChess));
             dispatch(turnOfGoOnBoardHistory());
-
     }
 
     dispatch(setValueBoard(row, col));

@@ -6,7 +6,7 @@ import {getHistoryNow} from '../reducers/playGameReducer'
 import {setBoard, initHistory,changeBoard, setWinGame,
      toogleDialog,toogleDialogEqual, setPlayerWin,
       changeHistory, toogleSortAscending,
-      getHistoryandSetBoard} from '../actions/playgame'
+      getHistoryandSetBoard, newGameClick} from '../actions/playgame'
 
 
 class PlayGameContainer extends React.Component {
@@ -71,7 +71,6 @@ class PlayGameContainer extends React.Component {
             }
 
         }
-        console.log('arr', arrBoxWin)
         index = colCheck;
         while(index < board.length -1){
             index++;
@@ -202,6 +201,10 @@ class PlayGameContainer extends React.Component {
         return null;
     }
 
+    newGame(){
+        this.props.newGameClick();
+        this.props.history.push('/');
+    }
 
     render(){
         
@@ -222,7 +225,7 @@ class PlayGameContainer extends React.Component {
                 sortByAscending={this.props.sortByAscending}
                 listChess={this.props.listChess}
                 clickItemHistory={(row, col) => this.props.getHistoryandSetBoard(row, col)}
-                resetGame={() =>  this.props.history.push('/')}
+                resetGame={() =>  this.newGame()}
              />
             
         )
@@ -268,7 +271,8 @@ PlayGameContainer.propTypes = {
     toogleSortAscending: PropTypes.func,
     listChess: PropTypes.array, 
     getHistoryandSetBoard: PropTypes.array,
-    initHistory: PropTypes.func
+    initHistory: PropTypes.func, 
+    newGameClick:PropTypes.func,
     
 }
 export default connect(
@@ -278,7 +282,8 @@ export default connect(
         changeHistory,
         toogleDialogEqual,
     toogleSortAscending, 
-    getHistoryandSetBoard}
+    getHistoryandSetBoard,
+    newGameClick}
 
 
 

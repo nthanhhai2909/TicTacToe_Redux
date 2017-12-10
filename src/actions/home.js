@@ -14,7 +14,8 @@ export const setNumberCellValid = () => ({
 })
 
 const isValid = numberCell => {
-    if(numberCell < 0) {return false;}
+    
+    if(numberCell < 5) {return false;}
     if(numberCell > 20) {return false;}
     return true;
 }

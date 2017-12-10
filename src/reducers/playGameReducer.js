@@ -15,9 +15,12 @@ import {INIT_BOARD,
      GO_ON_BOARD_HISTORY,
      SET_TURN,
      BACK_HISTORY,
-     TURN_OF_GO_ON_BOARD_HISTORY
+     TURN_OF_GO_ON_BOARD_HISTORY,
+     NEW_GAME,
+     NEW_HISTORY
     } from '../constants/actionTypes'
 import { combineReducers } from 'redux'
+import { initHistory } from '../actions/playgame';
 
 const initialStatePlayGame = {
     listChessOfWin: null,
@@ -46,6 +49,8 @@ const playGame = (state = initialStatePlayGame, action) => {
         case INIT_BOARD:
             return Object.assign({}, state,
                 {board: newBoard(action.numberCell)});
+        case NEW_GAME:
+            return Object.assign({} , initialStatePlayGame);
         case SET_VALUE_BOARD:
             let mboard = JSON.parse(JSON.stringify(state.board));
             mboard[action.row][action.col] = state.turn;
@@ -88,6 +93,8 @@ const playGame = (state = initialStatePlayGame, action) => {
 }
 const historys = (state = initialStateHistory, action) => {
     switch(action.type){
+        case NEW_HISTORY:
+            return Object.assign({}, initialStateHistory);
         case ADD_MOVE_HISTORY:
             return Object.assign({}, state, {historys: [...state.historys, action.board], 
                     listChess:[...state.listChess, {

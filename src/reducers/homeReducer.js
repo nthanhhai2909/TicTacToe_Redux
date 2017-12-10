@@ -11,7 +11,7 @@ const initialState = {
 const homeReducer = (state = initialState, action) => {
     switch(action.type){
         case SET_NUMBER_CELL:
-            return Object.assign({}, state, {numberCell: action.numberCell});
+            return Object.assign({}, state, {numberCell: parseInt(action.numberCell)});
         case SET_MESSAGE_NUMBER_CELL_INVALID:
             return Object.assign({}, state, {message: SET_MESSAGE_NUMBER_CELL_INVALID});
         case SET_MESSAGE_NUMBER_CELL_VALID:

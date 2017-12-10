@@ -12,7 +12,11 @@ class HomeContainer extends React.Component{
     }
 
     newGameClick(){
+        console.log
         if(this.props.message !== ''){
+            return;
+        }
+        if(this.props.numberCell === 0){
             return;
         }
         this.props.history.push('/playgame')
@@ -29,7 +33,8 @@ class HomeContainer extends React.Component{
     }
 }
 const mapStateToProps = state => ({
-    message: state.homeReducer.message
+    message: state.homeReducer.message,
+    numberCell: state.homeReducer.numberCell,
   })
   
 
