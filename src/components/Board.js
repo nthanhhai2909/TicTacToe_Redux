@@ -5,13 +5,20 @@ import '../css/index.css'
 
 
 const Board = ({board, clickBox, listChessOfWin}) => (
-    board.map((element, index) =>
-        <Cell cell={element}
-            rowIndex={index}
-            clickBox={(row, col) => clickBox(row, col)}
-            listChessOfWin={listChessOfWin}
-        />
-        )
+    <div>
+        <h3>Board</h3>
+        <hr />
+        {
+            board.map((element, index) =>
+            <Cell cell={element}
+                rowIndex={index}
+                clickBox={(row, col) => clickBox(row, col)}
+                listChessOfWin={listChessOfWin}
+            />
+            )
+        }
+    </div>
+    
 )
 
 

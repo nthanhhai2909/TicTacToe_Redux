@@ -55,7 +55,7 @@ const PlayGame = ({board, clickBox, turn,
         >
             EQUAL
         </Dialog>
-        <Grid bsClass='container' style={{backgroundColor:'#004D40', color:"#E0F2F1"}}>
+        <Grid bsClass='container' style={{backgroundColor:'#004D40', color:"#E0F2F1", height: 800}}>
             <Row className="show-grid">
                 <Col md={3}>
                     <Parameter 
@@ -68,7 +68,6 @@ const PlayGame = ({board, clickBox, turn,
                     />
                 </Col>
                 <Col md={9} >
-                    <h1>board</h1>
                     <Board
                         board={board}
                         listChessOfWin={listChessOfWin}
