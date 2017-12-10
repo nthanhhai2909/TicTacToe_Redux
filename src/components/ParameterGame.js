@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import '../css/index.css'
 import Toggle from 'material-ui/Toggle'
 import HistoryList from './HistoryList'
-const ParameterGame = ({turn, historys, toogleSortClick, sortByAscending }) => (
+const ParameterGame = ({turn, historys, toogleSortClick,
+     sortByAscending, clickItemHistory,listChess  }) => (
     <div>
         <h3>Parameter</h3>
         <hr />
@@ -21,8 +22,9 @@ const ParameterGame = ({turn, historys, toogleSortClick, sortByAscending }) => (
         <h4>Steps</h4>
         <div className='list-steps' >
             <HistoryList
+                listChess={listChess}
                 sortByAscending={sortByAscending}
-                historys={historys}
+                clickItemHistory={(row, col) => clickItemHistory(row, col)}
             />
         </div>
     </div>
@@ -31,7 +33,9 @@ const ParameterGame = ({turn, historys, toogleSortClick, sortByAscending }) => (
 ParameterGame.propTypes = {
     turn: PropTypes.string,
     historys: PropTypes.func,
-    sortByAscending: PropTypes.bool
+    sortByAscending: PropTypes.bool,
+    clickItemHistory: PropTypes.func,
+    listChess: PropTypes.array,
 }
 
 export default ParameterGame

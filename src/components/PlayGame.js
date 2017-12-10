@@ -15,7 +15,8 @@ const PlayGame = ({board, clickBox, turn,
      showDialog, submitWin, playerWin,
       listChessOfWin, historys,
       submitEqual, showDialogEqual,
-      toogleSortClick, sortByAscending }) => {
+      toogleSortClick, sortByAscending,
+      clickItemHistory, listChess }) => {
         
     const actions = [
         <FlatButton
@@ -62,6 +63,8 @@ const PlayGame = ({board, clickBox, turn,
                         historys={historys}
                         toogleSortClick={(value) => toogleSortClick(value)}
                         sortByAscending={sortByAscending}
+                        clickItemHistory={(row, col) => clickItemHistory(row, col)}
+                        listChess={listChess}
                     />
                 </Col>
                 <Col md={9} >
@@ -92,7 +95,9 @@ PlayGame.propTypes = {
     historys: PropTypes.array,
     showDialogEqual: PropTypes.bool,
     submitEqual: PropTypes.func,
-    sortByAscending: PropTypes.bool
+    sortByAscending: PropTypes.bool,
+    clickItemHistory: PropTypes.func,
+    listChess: PropTypes.array,
 }
 
 export default PlayGame

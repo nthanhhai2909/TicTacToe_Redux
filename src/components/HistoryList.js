@@ -3,18 +3,19 @@ import PropTypes from 'prop-types'
 import HistoryItem from './HistoryItem'
 
 
-const HistoryList = ({historys, sortByAscending}) =>{
-    let mHistory = JSON.parse(JSON.stringify(historys));
+const HistoryList = ({listChess, sortByAscending, clickItemHistory}) =>{
+    let mlistChess = JSON.parse(JSON.stringify(listChess));
     if(!sortByAscending){
-        mHistory = mHistory.reverse();
+        mlistChess = mlistChess.reverse();
         return(
-            mHistory.map((element, index) => {
+            mlistChess.map((element, index) => {
                 if(index === 0){
                     return(
                         <HistoryItem
                             isSelect={true}
-                            row={element.row}
-                            col={element.col}
+                            rowIndex={element.row}
+                            colIndex={element.col}
+                            clickItemHistory={(row, col) => clickItemHistory(row, col)}
                         />
                     )
                 }
@@ -22,8 +23,9 @@ const HistoryList = ({historys, sortByAscending}) =>{
                     return(
                         <HistoryItem
                             isSelect={false}
-                            row={element.row}
-                            col={element.col}
+                            rowIndex={element.row}
+                            colIndex={element.col}
+                            clickItemHistory={(row, col) => clickItemHistory(row, col)}
                         />
                     )
                 }
@@ -33,13 +35,14 @@ const HistoryList = ({historys, sortByAscending}) =>{
         return;
     }
     return(
-        mHistory.map((element, index) => {
-            if(index === mHistory.length - 1){
+        mlistChess.map((element, index) => {
+            if(index === mlistChess.length - 1){
                 return(
                     <HistoryItem
                         isSelect={true}
-                        row={element.row}
-                        col={element.col}
+                        rowIndex={element.row}
+                        colIndex={element.col}
+                        clickItemHistory={(row, col) => clickItemHistory(row, col)}
                     />
                 )
             }
@@ -47,8 +50,9 @@ const HistoryList = ({historys, sortByAscending}) =>{
                 return(
                     <HistoryItem
                         isSelect={false}
-                        row={element.row}
-                        col={element.col}
+                        rowIndex={element.row}
+                        colIndex={element.col}
+                        clickItemHistory={(row, col) => clickItemHistory(row, col)}
                     />
                 )
             }
@@ -57,12 +61,10 @@ const HistoryList = ({historys, sortByAscending}) =>{
     )
  
 }
-
-
-
 HistoryList.propTypes = {
     historys: PropTypes.array,
     sortByAscending: PropTypes.bool,
+    clickItemHistory: PropTypes.func,
 }
 
 export default HistoryList

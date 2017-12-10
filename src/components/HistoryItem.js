@@ -1,26 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import RaisedButton from 'material-ui/RaisedButton';
-const HistoryItem = ({isSelect, row, col}) => {
+const HistoryItem = ({isSelect, rowIndex, colIndex, clickItemHistory}) => {
+
     let move;
-    if(row === -1){
+    if(rowIndex === -1){
         move = 'start'
     }
     else{
-        move = row + ' - ' + col;
+        move = rowIndex + ' - ' + colIndex;
     }
 
+    
     return( 
         isSelect ?
             <RaisedButton
                 style={{marginRight:30, marginBottom:10}}
-                secondary={true}  >
+                secondary={true}  
+                onClick={() => clickItemHistory(rowIndex, colIndex)}
+                >
                 Move to {move}
+                
             </RaisedButton>
         :
             <RaisedButton 
                 primary={true}
                 style={{marginRight:30, marginBottom:10}}
+                onClick={() => clickItemHistory(rowIndex, colIndex)}
                  >
                 Move to {move}
             </RaisedButton>
@@ -32,8 +38,9 @@ const HistoryItem = ({isSelect, row, col}) => {
 
 HistoryItem.propTypes = {
     isSelect:  PropTypes.bool,
-    row: PropTypes.number,
-    col: PropTypes.number,
+    rowIndex: PropTypes.number,
+    colIndex: PropTypes.number,
+    clickItemHistory: PropTypes.func,
 }
 
 export default HistoryItem

@@ -11,7 +11,11 @@ import {INIT_BOARD,
      OPEN_DIALOG_EQUAL,
      CLOSE_DIALOG_EQUAL,
      OPEN_SORT_ACSCEDING, 
-     CLOSE_SORT_ACSCEDING
+     CLOSE_SORT_ACSCEDING,
+     GO_ON_BOARD_HISTORY,
+     SET_TURN,
+     BACK_HISTORY,
+     TURN_OF_GO_ON_BOARD_HISTORY
     } from '../constants/actionTypes'
 import { combineReducers } from 'redux'
 
@@ -23,11 +27,14 @@ const initialStatePlayGame = {
     isEqual: false,
     showDialogEqual: false,
     turn: 'x',
+    isGoOnboard: false,
+    indexHistory: null,
     board: new Array(0),
     
 }
 const initialStateHistory = {
-    historys: [{row: -1, col: -1, turn: 'none'}],
+    historys: [],
+    listChess: [],
     sortByAscending: false,
     numberMove: 0,
 }
@@ -67,7 +74,14 @@ const playGame = (state = initialStatePlayGame, action) => {
         case SET_LIST_CHESS_OF_WIN:
             let listChess = JSON.parse(JSON.stringify(state.listChessOfWin));
             return Object.assign({}, state, {listChessOfWin: action.arrayList})
-        
+        case GO_ON_BOARD_HISTORY: 
+            let newboard = JSON.parse(JSON.stringify(action.board));
+            return Object.assign({}, state, {board: newboard, 
+                            isGoOnboard: true, indexHistory: action.indexHistory});
+        case TURN_OF_GO_ON_BOARD_HISTORY:
+            return Object.assign({}, state, {isGoOnboard: false});
+        case SET_TURN: 
+            return Object.assign({}, state, {turn: action.turn});
         default: 
             return state;
     }
@@ -75,21 +89,23 @@ const playGame = (state = initialStatePlayGame, action) => {
 const historys = (state = initialStateHistory, action) => {
     switch(action.type){
         case ADD_MOVE_HISTORY:
-            return Object.assign({}, state,
-                 {historys: [...state.historys,
-                        {
-                            row: action.row,
-                            col: action.col,
-                            turn: action.turn,
-                        }
-                    ]
-                })
+            return Object.assign({}, state, {historys: [...state.historys, action.board], 
+                    listChess:[...state.listChess, {
+                        row: action.row,
+                        col: action.col
+                    }] 
+                });
         case ADD_NUMBER_MOVE:
             return Object.assign({}, state, {numberMove: state.numberMove + 1});
         case OPEN_SORT_ACSCEDING:
             return Object.assign({}, state, {sortByAscending: true});
         case CLOSE_SORT_ACSCEDING:
             return Object.assign({}, state, {sortByAscending: false});
+        case BACK_HISTORY:
+            return Object.assign({}, state, {
+                historys: action.historys,
+                listChess: action.listChess,
+            });
         default: 
             return state;
     }
@@ -100,4 +116,10 @@ export default combineReducers({
     historys
   })
 
+  export const getHistoryNow = state =>{
+    let newState = JSON.parse(JSON.stringify(state));
+    let result = newState.slice(newState.length - 1, newState.length);
+    return result;
+  }
+   
 

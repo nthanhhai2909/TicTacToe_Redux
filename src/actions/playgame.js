@@ -24,7 +24,25 @@ export const playerWin = () =>({
 export const setWinGame = () => (dispatch) => 
     dispatch(playerWin());
 
-export const changeBoard = (row, col) => (dispatch) =>{
+export const backHistory = (historys, listChess) =>({
+    type: types.BACK_HISTORY,
+    historys,
+    listChess
+})
+export const changeBoard = (row, col) => (dispatch, getState) =>{
+
+    if(getState().playgameReducer.playGame.isGoOnboard === true){
+       
+
+            let mHistorys = JSON.parse(JSON.stringify(getState().playgameReducer.historys.historys));
+            let mListChess = JSON.parse(JSON.stringify(getState().playgameReducer.historys.listChess))
+            mHistorys = mHistorys.slice(0, getState().playgameReducer.playGame.indexHistory + 1);
+            mListChess = mListChess.slice(0, getState().playgameReducer.playGame.indexHistory + 1);
+            dispatch(backHistory(mHistorys, mListChess));
+            dispatch(turnOfGoOnBoardHistory());
+
+    }
+
     dispatch(setValueBoard(row, col));
     dispatch(changeTurn());
 }
@@ -66,19 +84,25 @@ export const setPlayerWin = (player, arrayList) => (dispatch) => {
     dispatch(setListChessOfWin(arrayList));
 }
 
-export const addMoveHistory = (row, col, turn) =>({
+export const addMoveHistory = (board, row, col) =>({
     type: types.ADD_MOVE_HISTORY,
+    board,
     row,
     col,
-    turn
 })
+
+export const initHistory = (board, row, col) => (dispatch) => {
+    dispatch(addMoveHistory(board, row, col));
+}
 export const addNumberMove = () =>({
     type: types.ADD_NUMBER_MOVE
 })
     
 
-export const changeHistory =  (row, col, turn) => (dispatch) =>{
-    dispatch(addMoveHistory(row, col, turn));
+export const changeHistory =  (row, col) => (dispatch, getState) =>{
+    
+    dispatch(addMoveHistory(getState().playgameReducer.playGame.board,
+        row, col));
     dispatch(addNumberMove());
 }
 
@@ -97,8 +121,50 @@ export const toogleSortAscending = () => (dispatch, getState) => {
     }
     else{
         dispatch(closeSortAscending());
+    } 
+}
+
+export const goOnBoardHistory = (board,indexHistory) => ({
+    type: types.GO_ON_BOARD_HISTORY,
+    board,
+    indexHistory
+})
+
+export const turnOfGoOnBoardHistory = () => ({
+    type: types.TURN_OF_GO_ON_BOARD_HISTORY
+})
+export const setTurn = (turn) => ({
+    type: types.SET_TURN,
+    turn
+})
+
+export const getHistoryandSetBoard = (row, col) => (dispatch, getState) => {
+    let index = -1;
+
+    for(let i = 0; i < getState().playgameReducer.historys.listChess.length; i++){
+        if(row ===  getState().playgameReducer.historys.listChess[i].row && 
+            col ===  getState().playgameReducer.historys.listChess[i].col){
+                index =  i;
+            }
     }
-    
+
+
+    let board = JSON.parse(JSON.stringify(getState().playgameReducer.historys.historys[index]));
+    let mturn;
+
+    if(row !== -1){
+        if(board[row][col] === 'x'){
+            mturn = 'o';
+        }
+        if(board[row][col] === 'o'){
+            mturn = 'x';
+        }
+    }
+    else{
+        mturn = 'x';
+    }    
+    dispatch(goOnBoardHistory(board, index));
+    dispatch(setTurn(mturn));
 }
 
 

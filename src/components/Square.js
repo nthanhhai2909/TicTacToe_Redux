@@ -5,7 +5,6 @@ import {Button} from 'react-bootstrap'
 import {changeBoard} from '../actions/playgame'
 
 const Square = ({value, clickBox, listChessOfWin, row, col}) => {
-
     const style = {
         backgroundColor: 'red'
     }

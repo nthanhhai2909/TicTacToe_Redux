@@ -8,7 +8,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types' 
 
 const Home = ({message, newGameClick, changeNumberCell}) => {
-    
     return(
     <div>
         <Header/>

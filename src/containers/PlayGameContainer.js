@@ -1,10 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
+import PropTypes, { array } from 'prop-types'
 import PlayGame from '../components/PlayGame'
-import {setBoard, changeBoard, setWinGame,
+import {getHistoryNow} from '../reducers/playGameReducer'
+import {setBoard, initHistory,changeBoard, setWinGame,
      toogleDialog,toogleDialogEqual, setPlayerWin,
-      changeHistory, toogleSortAscending} from '../actions/playgame'
+      changeHistory, toogleSortAscending,
+      getHistoryandSetBoard} from '../actions/playgame'
 
 
 class PlayGameContainer extends React.Component {
@@ -15,6 +17,10 @@ class PlayGameContainer extends React.Component {
 
     componentDidMount(){
         this.props.setBoard(parseInt(this.props.numberCell));
+        this.props.initHistory( Array.apply(null,
+             Array(parseInt(this.props.numberCell))).map(
+                 () => new Array(parseInt(this.props.numberCell)).fill(null)), -1, -1);
+        
     }
     handleClick(row, col){
         if(this.props.isWin){
@@ -39,7 +45,7 @@ class PlayGameContainer extends React.Component {
 
         this.props.changeBoard(row, col);
         //add move in history
-        this.props.changeHistory(row, col, this.props.turn);
+        this.props.changeHistory(row, col);
         
     }
     isEqual(numberCell, numberMove){
@@ -49,13 +55,14 @@ class PlayGameContainer extends React.Component {
         return false;
     }
     isWin(board, rowCheck, colCheck, turn){
-
         let index = colCheck;
         let arrBoxWin = [];
-        arrBoxWin.push[rowCheck, colCheck];
 
+        arrBoxWin.push([rowCheck, colCheck]);
+        
         while(index > 0){
             index--;
+
             if(board[rowCheck][index] === turn){
                 arrBoxWin.push([rowCheck, index]);
             }
@@ -64,6 +71,7 @@ class PlayGameContainer extends React.Component {
             }
 
         }
+        console.log('arr', arrBoxWin)
         index = colCheck;
         while(index < board.length -1){
             index++;
@@ -94,6 +102,7 @@ class PlayGameContainer extends React.Component {
                 
             }
         }
+
         index = rowCheck;
         while(index < board.length - 1){
             index++;
@@ -193,7 +202,9 @@ class PlayGameContainer extends React.Component {
         return null;
     }
 
+
     render(){
+        
         return(
             <PlayGame
                 listChessOfWin={this.props.listChessOfWin}
@@ -209,6 +220,8 @@ class PlayGameContainer extends React.Component {
                 submitEqual={() => this.props.toogleDialogEqual(false)}
                 toogleSortClick={() => this.props.toogleSortAscending()}
                 sortByAscending={this.props.sortByAscending}
+                listChess={this.props.listChess}
+                clickItemHistory={(row, col) => this.props.getHistoryandSetBoard(row, col)}
              />
             
         )
@@ -224,11 +237,12 @@ const mapStateToProps = state =>({
     board: state.playgameReducer.playGame.board,
     playerWin: state.playgameReducer.playGame.playerWin,
     listChessOfWin: state.playgameReducer.playGame.listChessOfWin,
-    historys: state.playgameReducer.historys.historys,
+    historys: getHistoryNow(state.playgameReducer.historys.historys),
     numberMove: state.playgameReducer.historys.numberMove,
     isEqual: state.playgameReducer.playGame.isEqual,
     showDialogEqual: state.playgameReducer.playGame.showDialogEqual,
-    sortByAscending: state.playgameReducer.historys.sortByAscending
+    sortByAscending: state.playgameReducer.historys.sortByAscending,
+    listChess: state.playgameReducer.historys.listChess,
 })
     
 
@@ -251,13 +265,21 @@ PlayGameContainer.propTypes = {
     toogleDialogEqual: PropTypes.func, 
     sortByAscending: PropTypes.bool,
     toogleSortAscending: PropTypes.func,
+    listChess: PropTypes.array, 
+    getHistoryandSetBoard: PropTypes.array,
+    initHistory: PropTypes.func
     
 }
 export default connect(
     mapStateToProps,
-    { setBoard, changeBoard, setWinGame, 
+    { setBoard, initHistory, changeBoard, setWinGame, 
         toogleDialog, setPlayerWin, 
         changeHistory,
         toogleDialogEqual,
-    toogleSortAscending}
+    toogleSortAscending, 
+    getHistoryandSetBoard}
+
+
+
+    
 ) (PlayGameContainer)
